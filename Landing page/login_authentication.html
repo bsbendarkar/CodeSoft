@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset="utf-8">
+	<title>Calculator</title>
+	<link rel="stylesheet" href="login_authentication.css">
+</head>
+<body>
+	<div id="container">
+        <div id="tabs">
+            <p id="login_t" class="tabs" onclick="loginTabFun()">Log in</p>
+            <p id="register_t" class="tabs" onclick="regTabFun()">Register</p>
+            <div id="clear"></div>
+        </div>
+
+        <div id="cont">
+            <div id="login" class="comm">
+                <h3>Sign in</h3>
+
+                <input id="se" type="email" placeholder="Email" required/>
+                <input id="sp" type="password" placeholder="Password" required/>
+                <input type="submit" onclick="login()" value="Submit"/>
+
+                <p onclick="forTabFun()">Forget Password?</p>
+            </div>
+            <div id="register" class="comm">
+                <h3>Register</h3>
+
+                <input id="r-mail" type="email" placeholder="Email" required/>
+                <input id="r-pass" type="password" placeholder="Password" required/>
+                <input id="rrp" type="password" placeholder="Re write Password" required/>
+                <input type="submit" onclick="register()" value="Submit"/>
+
+            </div >
+            <div id="forgot" class="comm">
+            <h3>Forgot Password</h3>
+            <div>
+                <input id="fe" type="email" placeholder="Email" required/>
+                <input type="submit" onclick="forgot()" value="Submit"/>
+            </div>
+            </div>
+        </div>
+    </div>
+	
+	
+	<script>
+		var e_Array=[];
+        var p_Array=[];
+
+        var loginBox = document.getElementById("login");
+        var regBox = document.getElementById("register");
+        var forgetBox = document.getElementById("forgot");
+
+        var loginTab = document.getElementById("lt");
+        var regTab = document.getElementById("rt");
+
+        function regTabFun(){
+            event.preventDefault();
+
+            regBox.style.visibility="visible";
+            loginBox.style.visibility="hidden";
+            forgetBox.style.visibility="hidden";
+
+            regTab.style.backgroundColor="rgb(12, 132, 189)";
+            loginTab.style.backgroundColor="rgba(11, 177, 224, 0.82)";
+        }
+        function loginTabFun(){
+            event.preventDefault();
+
+            regBox.style.visibility="hidden";
+            loginBox.style.visibility="visible";
+            forgetBox.style.visibility="hidden";
+
+            loginTab.style.backgroundColor="rgb(12, 132, 189)";
+            regTab.style.backgroundColor="rgba(11, 177, 224, 0.82)";
+        }
+        function forTabFun(){
+            event.preventDefault();
+
+            regBox.style.visibility="hidden";
+            loginBox.style.visibility="hidden";
+            forgetBox.style.visibility="visible";
+
+            regTab.style.backgroundColor="rgba(11, 177, 224, 0.82)";
+            loginTab.style.backgroundColor="rgba(11, 177, 224, 0.82)";
+
+        }
+
+
+        function register(){
+            event.preventDefault();
+
+            var email = document.getElementById("r-mail").value;
+            var password = document.getElementById("r-pass").value;
+            var passwordRetype = document.getElementById("rrp").value;
+
+            if (email == ""){
+                alert("Email required.");
+                return ;
+            }
+            else if (password == ""){
+                alert("Password required.");
+                return ;
+            }
+            else if (passwordRetype == ""){
+                alert("Password required.");
+                return ;
+            }
+            else if ( password != passwordRetype ){
+                alert("Password don't match retype your Password.");
+                return;
+            }
+            else if(e_Array.indexOf(email) == -1){
+                e_Array.push(email);
+                p_Array.push(password);
+
+                alert(email + "  Thanks for registration. \nTry to login Now");
+
+                document.getElementById("r-mail").value ="";
+                document.getElementById("r-pass").value="";
+                document.getElementById("rrp").value="";
+            }
+            else{
+                alert(email + " is already register.");
+                return ;
+            }
+        }
+        function login(){
+            event.preventDefault();
+
+            var email = document.getElementById("se").value;
+            var password = document.getElementById("sp").value;
+
+            var i = e_Array.indexOf(email);
+
+            if(e_Array.indexOf(email) == -1){
+                if (email == ""){
+                    alert("Email required.");
+                    return ;
+                }
+                alert("Email does not exist.");
+                return ;
+            }
+            else if(p_Array[i] != password){
+                if (password == ""){
+                    alert("Password required.");
+                    return ;
+                }
+                alert("Password does not match.");
+                return ;
+            }
+            else {
+                alert(email + " yor are login Now \n welcome to our website.");
+
+                document.getElementById("se").value ="";
+                document.getElementById("sp").value="";
+                return ;
+            }
+
+        }
+        function forgot(){
+            event.preventDefault();
+
+            var email = document.getElementById("fe").value;
+
+            if(e_Array.indexOf(email) == -1){
+                if (email == ""){
+                    alert("Email required.");
+                    return ;
+                }
+                alert("Email does not exist.");
+                return ;
+            }
+
+            alert("email is send to your email check it in 24hr. \n Thanks");
+            document.getElementById("fe").value ="";
+        }
+	</script>
+</body>
+</html>
